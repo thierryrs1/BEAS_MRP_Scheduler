@@ -1,0 +1,17 @@
+{
+  "name": "mrp-service",
+  "version": "1.0.0",
+  "description": "Serviço para agendamento de MRP no BEAS",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "@sap/hana-client": "^2.21.32",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "node-cron": "^3.0.3"
+  }
+}

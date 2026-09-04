@@ -1,0 +1,59 @@
+<mvc:View
+    controllerName="mrp.app.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+    
+    <Page id="page" title="Portal MRP BEAS" class="sapUiContentPadding">
+        <headerContent>
+            <Button icon="sap-icon://add" text="Novo Agendamento" press="onOpenAddDialog" type="Emphasized"/>
+        </headerContent>
+        
+        <content>
+            <Table id="schedulesTable" items="{/schedules}" noDataText="Nenhum agendamento ativo." headerText="Agendamentos Ativos">
+                <columns>
+                    <Column>
+                        <Text text="Cenário (ID - Nome)"/>
+                    </Column>
+                    <Column>
+                        <Text text="Expressão Cron / Horário"/>
+                    </Column>
+                    <Column hAlign="End">
+                        <Text text="Ações"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{scenarioId} - {scenarioName}"/>
+                            <Text text="{cronExpression}"/>
+                            <Button icon="sap-icon://delete" type="Reject" press="onDeleteSchedule" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+
+    <!-- Dialogo Novo Agendamento -->
+    <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+        <Dialog id="addDialog" title="Novo Agendamento">
+            <content>
+                <VBox class="sapUiSmallMargin">
+                    <Label text="Selecione o Cenário:" required="true" />
+                    <Select id="scenarioSelect" items="{/scenarios}" width="100%">
+                        <core:Item key="{NR}" text="{NR} - {BEZEICHNUNG}" />
+                    </Select>
+                    
+                    <Label text="Expressão Cron (ex: 0 8 * * * para 08:00 todos os dias):" required="true" class="sapUiTopMarginSmall" />
+                    <Input id="cronInput" placeholder="Minuto Hora Dia Mês DiaDaSemana" value="0 8 * * *" />
+                </VBox>
+            </content>
+            <buttons>
+                <Button text="Salvar" type="Accept" press="onSaveSchedule" />
+                <Button text="Cancelar" press="onCloseAddDialog" />
+            </buttons>
+        </Dialog>
+    </core:FragmentDefinition>
+</mvc:View>
