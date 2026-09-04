@@ -38,6 +38,7 @@ sap.ui.define([
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
+                    sessionStorage.setItem("SessionId", data.SessionId || "mock_session");
                     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                     oRouter.navTo("RouteMain");
                 } else {
