@@ -20,7 +20,7 @@ const connOptions = {
     serverNode: process.env.DB_SERVER,
     uid: process.env.DB_USERNAME,
     pwd: process.env.DB_PASSWORD,
-    databaseName: process.env.DB_NAME
+    currentSchema: process.env.DB_NAME // changed from databaseName to currentSchema for SAP B1
 };
 
 function executeMrp(scenarioId) {
@@ -97,7 +97,10 @@ app.get('/api/scenarios', (req, res) => {
             return res.status(500).json({ error: 'Erro de conexão com o banco de dados' });
         }
         
-        const sql = 'SELECT "NR", "BEZEICHNUNG" FROM "BEAS_MRP_PLANUNG" ORDER BY 1';
+        // Add DB_NAME dynamically as schema to avoid schema errors
+        const schema = process.env.DB_NAME;
+        const sql = `SELECT "NR", "BEZEICHNUNG" FROM "${schema}"."BEAS_MRP_PLANUNG" ORDER BY 1`;
+        
         conn.exec(sql, (err, rows) => {
             conn.disconnect();
             if (err) {

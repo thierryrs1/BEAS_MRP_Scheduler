@@ -34,26 +34,36 @@
                 </items>
             </Table>
         </content>
-    </Page>
 
-    <!-- Dialogo Novo Agendamento -->
-    <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-        <Dialog id="addDialog" title="Novo Agendamento">
-            <content>
-                <VBox class="sapUiSmallMargin">
-                    <Label text="Selecione o Cenário:" required="true" />
-                    <Select id="scenarioSelect" items="{/scenarios}" width="100%">
-                        <core:Item key="{NR}" text="{NR} - {BEZEICHNUNG}" />
-                    </Select>
-                    
-                    <Label text="Expressão Cron (ex: 0 8 * * * para 08:00 todos os dias):" required="true" class="sapUiTopMarginSmall" />
-                    <Input id="cronInput" placeholder="Minuto Hora Dia Mês DiaDaSemana" value="0 8 * * *" />
-                </VBox>
-            </content>
-            <buttons>
-                <Button text="Salvar" type="Accept" press="onSaveSchedule" />
-                <Button text="Cancelar" press="onCloseAddDialog" />
-            </buttons>
-        </Dialog>
-    </core:FragmentDefinition>
+        <dependents>
+            <Dialog id="addDialog" title="Novo Agendamento">
+                <content>
+                    <VBox class="sapUiSmallMargin">
+                        <Label text="Selecione o Cenário:" required="true" />
+                        <Select id="scenarioSelect" items="{/scenarios}" width="100%">
+                            <core:Item key="{NR}" text="{NR} - {BEZEICHNUNG}" />
+                        </Select>
+                        
+                        <Label text="Horário:" required="true" class="sapUiTopMarginSmall" />
+                        <TimePicker id="timePicker" valueFormat="HH:mm" displayFormat="HH:mm" placeholder="Selecione o horário" width="100%" />
+
+                        <Label text="Dias da semana:" required="true" class="sapUiTopMarginSmall" />
+                        <HBox wrap="Wrap" class="sapUiTinyMarginTop">
+                            <CheckBox id="chkMon" text="Seg" selected="true" class="sapUiTinyMarginEnd" />
+                            <CheckBox id="chkTue" text="Ter" selected="true" class="sapUiTinyMarginEnd" />
+                            <CheckBox id="chkWed" text="Qua" selected="true" class="sapUiTinyMarginEnd" />
+                            <CheckBox id="chkThu" text="Qui" selected="true" class="sapUiTinyMarginEnd" />
+                            <CheckBox id="chkFri" text="Sex" selected="true" class="sapUiTinyMarginEnd" />
+                            <CheckBox id="chkSat" text="Sáb" class="sapUiTinyMarginEnd" />
+                            <CheckBox id="chkSun" text="Dom" />
+                        </HBox>
+                    </VBox>
+                </content>
+                <buttons>
+                    <Button text="Salvar" type="Accept" press="onSaveSchedule" />
+                    <Button text="Cancelar" press="onCloseAddDialog" />
+                </buttons>
+            </Dialog>
+        </dependents>
+    </Page>
 </mvc:View>
