@@ -30,6 +30,7 @@
                             <Text text="{cronExpression}"/>
                             <HBox justifyContent="End" class="sapUiTinyMargin">
                                 <Button icon="sap-icon://media-play" type="Accept" tooltip="Rodar Agora" press="onRunScheduleNow" class="sapUiTinyMarginEnd" />
+                                <Button icon="sap-icon://edit" type="Transparent" tooltip="Editar Agendamento" press="onEditSchedule" class="sapUiTinyMarginEnd" />
                                 <Button icon="sap-icon://delete" type="Reject" tooltip="Excluir Agendamento" press="onDeleteSchedule" />
                             </HBox>
                         </cells>
@@ -44,7 +45,7 @@
                     <VBox class="sapUiSmallMargin">
                         <Label text="Selecione o Cenário:" required="true" />
                         <Select id="scenarioSelect" items="{/scenarios}" width="100%">
-                            <core:Item key="{NR}" text="{NR} - {BEZEICHNUNG}" />
+                            <core:Item key="{NR}" text="{BEZEICHNUNG}" />
                         </Select>
                         
                         <Label text="Horário:" required="true" class="sapUiTopMarginSmall" />

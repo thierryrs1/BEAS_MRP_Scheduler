@@ -7,6 +7,8 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("mrp.app.controller.Main", {
+        _editingId: null,
+
         onInit: function () {
             this.getView().setModel(new JSONModel({ schedules: [], scenarios: [] }));
             this.loadSchedules();
@@ -43,16 +45,60 @@ sap.ui.define([
         },
 
         onOpenAddDialog: function () {
+            this._editingId = null;
             var oView = this.getView();
             var oDialog = oView.byId("addDialog");
             if (oDialog) {
+                oDialog.setTitle("Novo Agendamento");
                 oView.byId("timePicker").setValue("");
+                
+                oView.byId("chkMon").setSelected(true);
+                oView.byId("chkTue").setSelected(true);
+                oView.byId("chkWed").setSelected(true);
+                oView.byId("chkThu").setSelected(true);
+                oView.byId("chkFri").setSelected(true);
+                oView.byId("chkSat").setSelected(false);
+                oView.byId("chkSun").setSelected(false);
+
                 oDialog.open();
             }
         },
 
+        onEditSchedule: function (oEvent) {
+            var oItem = oEvent.getSource().getParent().getParent(); 
+            var schedule = oItem.getBindingContext().getObject();
+            
+            this._editingId = schedule.id;
+            
+            var oView = this.getView();
+            var oDialog = oView.byId("addDialog");
+            
+            oDialog.setTitle("Editar Agendamento");
+            oView.byId("scenarioSelect").setSelectedKey(schedule.scenarioId);
+            
+            // Decodifica a expressão Cron de volta pra tela (minuto hora * * dias)
+            var parts = schedule.cronExpression.split(" ");
+            var minute = parts[0];
+            var hour = parts[1];
+            var days = parts[4].split(",");
+            
+            var timeStr = (hour.length === 1 ? "0"+hour : hour) + ":" + (minute.length === 1 ? "0"+minute : minute);
+            oView.byId("timePicker").setValue(timeStr);
+            
+            oView.byId("chkSun").setSelected(days.includes("0"));
+            oView.byId("chkMon").setSelected(days.includes("1"));
+            oView.byId("chkTue").setSelected(days.includes("2"));
+            oView.byId("chkWed").setSelected(days.includes("3"));
+            oView.byId("chkThu").setSelected(days.includes("4"));
+            oView.byId("chkFri").setSelected(days.includes("5"));
+            oView.byId("chkSat").setSelected(days.includes("6"));
+
+            oDialog.open();
+        },
+
         onCloseAddDialog: function () {
             this.getView().byId("addDialog").close();
+            this._editingId = null;
         },
 
         onSaveSchedule: function () {
@@ -83,8 +129,16 @@ sap.ui.define([
             
             var cronExpression = minute + " " + hour + " * * " + cronDays;
 
-            fetch('/api/schedules', {
-                method: 'POST',
+            var url = '/api/schedules';
+            var method = 'POST';
+            
+            if (this._editingId) {
+                url = '/api/schedules/' + this._editingId;
+                method = 'PUT';
+            }
+
+            fetch(url, {
+                method: method,
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ scenarioId: scenarioId, scenarioName: scenarioName, cronExpression: cronExpression })
             })
@@ -93,15 +147,15 @@ sap.ui.define([
                 return res.json();
             })
             .then(data => {
-                MessageToast.show("Agendamento criado com sucesso");
+                MessageToast.show("Agendamento salvo com sucesso");
                 this.loadSchedules();
                 this.onCloseAddDialog();
             })
-            .catch(err => MessageBox.error("Erro no servidor ao criar o agendamento."));
+            .catch(err => MessageBox.error("Erro no servidor ao salvar o agendamento."));
         },
 
         onDeleteSchedule: function (oEvent) {
-            var oItem = oEvent.getSource().getParent().getParent(); // Agora o botão está dentro de um HBox
+            var oItem = oEvent.getSource().getParent().getParent();
             var schedule = oItem.getBindingContext().getObject();
 
             fetch('/api/schedules/' + schedule.id, {
@@ -116,7 +170,7 @@ sap.ui.define([
         },
 
         onRunScheduleNow: function (oEvent) {
-            var oItem = oEvent.getSource().getParent().getParent(); // O botão está dentro de um HBox
+            var oItem = oEvent.getSource().getParent().getParent();
             var schedule = oItem.getBindingContext().getObject();
 
             fetch('/api/schedules/' + schedule.id + '/run', {

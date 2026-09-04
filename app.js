@@ -94,6 +94,41 @@ app.post('/api/schedules', (req, res) => {
     });
 });
 
+app.put('/api/schedules/:id', (req, res) => {
+    const { id } = req.params;
+    const { scenarioId, cronExpression, scenarioName } = req.body;
+
+    if (!cron.validate(cronExpression)) {
+        return res.status(400).json({ error: "Expressão Cron inválida" });
+    }
+
+    const index = schedules.findIndex(s => s.id === id);
+    if (index !== -1) {
+        const sql = `UPDATE "${schema}"."SPS_MRP_SCHEDULES" SET "SCENARIO_ID" = ?, "SCENARIO_NAME" = ?, "CRON_EXPRESSION" = ? WHERE "ID" = ?`;
+        executeSql(sql, [scenarioId, scenarioName, cronExpression, id], (err) => {
+            if (err) {
+                console.error("Erro ao atualizar no HANA:", err);
+                return res.status(500).json({ error: "Erro ao atualizar no banco" });
+            }
+
+            // Atualiza na memória
+            schedules[index] = { id, scenarioId, scenarioName, cronExpression };
+
+            // Reinicia o cron
+            if (activeJobs[id]) {
+                activeJobs[id].stop();
+            }
+            activeJobs[id] = cron.schedule(cronExpression, () => {
+                executeMrp(scenarioId);
+            });
+
+            res.status(200).json(schedules[index]);
+        });
+    } else {
+        res.status(404).json({ error: "Agendamento não encontrado" });
+    }
+});
+
 app.delete('/api/schedules/:id', (req, res) => {
     const { id } = req.params;
     const index = schedules.findIndex(s => s.id === id);
