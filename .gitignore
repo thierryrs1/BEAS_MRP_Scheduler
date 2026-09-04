@@ -5,3 +5,6 @@ execucao_mrp.log
 *.bat
 logs/
 
+daemon/
+*.log
+
