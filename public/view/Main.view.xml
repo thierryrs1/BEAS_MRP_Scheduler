@@ -37,9 +37,9 @@
                             <Text text="{TimeEndMRP}"/>
                             <Text text="{cronExpression}"/>
                             <HBox justifyContent="End" class="sapUiTinyMargin">
-                                <Button icon="sap-icon://media-play" type="Accept" tooltip="Rodar Agora" press="onRunScheduleNow" class="sapUiTinyMarginEnd" />
-                                <Button icon="sap-icon://edit" type="Transparent" tooltip="Editar Agendamento" press="onEditSchedule" class="sapUiTinyMarginEnd" />
-                                <Button icon="sap-icon://delete" type="Reject" tooltip="Excluir Agendamento" press="onDeleteSchedule" />
+                                <Button icon="sap-icon://media-play" tooltip="Rodar Agora" press="onRunScheduleNow" class="sapUiTinyMarginEnd actionBtn playBtn" />
+                                <Button icon="sap-icon://edit" tooltip="Editar Agendamento" press="onEditSchedule" class="sapUiTinyMarginEnd actionBtn editBtn" />
+                                <Button icon="sap-icon://delete" tooltip="Excluir Agendamento" press="onDeleteSchedule" class="actionBtn deleteBtn" />
                             </HBox>
                         </cells>
                     </ColumnListItem>

@@ -73,7 +73,7 @@ app.get('/api/config', (req, res) => {
 
 app.post('/api/login', (req, res) => {
     const { username, password } = req.body;
-    
+
     if (!process.env.SL_URL) {
         return res.status(500).json({ success: false, error: 'URL do Service Layer não configurada' });
     }
@@ -83,9 +83,9 @@ app.post('/api/login', (req, res) => {
         UserName: username,
         Password: password
     });
-    
+
     const slUrl = new URL(process.env.SL_URL + "/Login");
-    
+
     const options = {
         hostname: slUrl.hostname,
         port: slUrl.port || 443,
@@ -97,7 +97,7 @@ app.post('/api/login', (req, res) => {
         },
         rejectUnauthorized: false
     };
-    
+
     const request = https.request(options, (response) => {
         let body = '';
         response.on('data', chunk => body += chunk);
@@ -106,7 +106,7 @@ app.post('/api/login', (req, res) => {
                 try {
                     const parsed = JSON.parse(body);
                     res.json({ success: true, SessionId: parsed.SessionId });
-                } catch(e) {
+                } catch (e) {
                     res.json({ success: true });
                 }
             } else {
@@ -114,12 +114,12 @@ app.post('/api/login', (req, res) => {
             }
         });
     });
-    
+
     request.on('error', (err) => {
         console.error('Erro de conexão com Service Layer:', err);
         res.status(500).json({ success: false, error: 'Erro ao conectar ao Service Layer' });
     });
-    
+
     request.write(data);
     request.end();
 });
@@ -131,8 +131,8 @@ app.get('/api/schedules', (req, res) => {
             T0."SCENARIO_ID" as "scenarioId",
             T0."SCENARIO_NAME" as "scenarioName",
             T0."SCENARIO_ID" || ' - ' || T0."SCENARIO_NAME" as "Cenário",
-            T1."TimeStartMRP",
-            T1."TimeEndMRP",
+            TO_NVARCHAR(T1."TimeStartMRP", 'DD/MM/YYYY HH24:MI:SS') as "TimeStartMRP",
+            TO_NVARCHAR(T1."TimeEndMRP", 'DD/MM/YYYY HH24:MI:SS') as "TimeEndMRP",
             T0."CRON_EXPRESSION" as "cronExpression"
         FROM
             "${schema}"."SPS_MRP_SCHEDULES" T0

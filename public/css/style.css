@@ -142,3 +142,50 @@
     transform: translateY(2px) !important;
     background: #0097a7 !important;
 }
+
+/* Tabela - Botões de Ação Customizados */
+.actionBtn {
+    width: 36px !important;
+    height: 36px !important;
+    
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.actionBtn .sapMBtnInner {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 8px !important;
+    border: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+    transition: all 0.2s ease !important;
+}
+
+.actionBtn .sapMBtnInner:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+}
+
+.actionBtn .sapMBtnInner:active {
+    transform: translateY(0px) !important;
+}
+
+.actionBtn .sapMBtnIcon {
+    color: #ffffff !important;
+    font-size: 1.1rem !important;
+}
+
+/* Cores específicas */
+.playBtn .sapMBtnInner { background-color: #28a745 !important; }
+.playBtn .sapMBtnInner:hover { background-color: #218838 !important; }
+
+.editBtn .sapMBtnInner { background-color: #007bff !important; }
+.editBtn .sapMBtnInner:hover { background-color: #0069d9 !important; }
+
+.deleteBtn .sapMBtnInner { background-color: #dc3545 !important; }
+.deleteBtn .sapMBtnInner:hover { background-color: #c82333 !important; }
+
