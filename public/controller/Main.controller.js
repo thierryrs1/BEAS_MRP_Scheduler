@@ -11,6 +11,17 @@ sap.ui.define([
 
         onInit: function () {
             this.getView().setModel(new JSONModel({ schedules: [], scenarios: [] }));
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.getRoute("RouteMain").attachPatternMatched(this._onObjectMatched, this);
+        },
+
+        _onObjectMatched: function (oEvent) {
+            var sessionId = sessionStorage.getItem("SessionId");
+            if (!sessionId) {
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("RouteLogin", {}, true);
+                return;
+            }
             this.loadSchedules();
             this.loadScenarios();
         },
