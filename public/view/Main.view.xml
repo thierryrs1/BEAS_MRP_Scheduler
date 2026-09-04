@@ -14,10 +14,16 @@
             <Table id="schedulesTable" items="{/schedules}" noDataText="Nenhum agendamento ativo." headerText="Agendamentos Ativos">
                 <columns>
                     <Column>
-                        <Text text="Cenário (ID - Nome)"/>
+                        <Text text="Cenário"/>
                     </Column>
                     <Column>
-                        <Text text="Expressão Cron / Horário"/>
+                        <Text text="Início do Cálculo"/>
+                    </Column>
+                    <Column>
+                        <Text text="Fim do Cálculo"/>
+                    </Column>
+                    <Column>
+                        <Text text="Expressão Cron"/>
                     </Column>
                     <Column hAlign="End">
                         <Text text="Ações"/>
@@ -26,7 +32,9 @@
                 <items>
                     <ColumnListItem>
                         <cells>
-                            <Text text="{scenarioId} - {scenarioName}"/>
+                            <Text text="{Cenario}"/>
+                            <Text text="{TimeStartMRP}"/>
+                            <Text text="{TimeEndMRP}"/>
                             <Text text="{cronExpression}"/>
                             <HBox justifyContent="End" class="sapUiTinyMargin">
                                 <Button icon="sap-icon://media-play" type="Accept" tooltip="Rodar Agora" press="onRunScheduleNow" class="sapUiTinyMarginEnd" />

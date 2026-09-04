@@ -125,7 +125,29 @@ app.post('/api/login', (req, res) => {
 });
 
 app.get('/api/schedules', (req, res) => {
-    res.json(schedules);
+    const sql = `
+        SELECT
+            T0."ID" as "id",
+            T0."SCENARIO_ID" as "scenarioId",
+            T0."SCENARIO_NAME" as "scenarioName",
+            T0."SCENARIO_ID" || ' - ' || T0."SCENARIO_NAME" as "Cenario",
+            T1."TimeStartMRP",
+            T1."TimeEndMRP",
+            T0."CRON_EXPRESSION" as "cronExpression"
+        FROM
+            "${schema}"."SPS_MRP_SCHEDULES" T0
+        LEFT JOIN
+            "${schema}"."BEAS_MRP_PLANUNG" T1 ON T0."SCENARIO_ID" = TO_NVARCHAR(T1."NR")
+        ORDER BY
+            T0."ID"
+    `;
+    executeSql(sql, [], (err, rows) => {
+        if (err) {
+            console.error('Erro ao consultar agendamentos dinamicamente:', err);
+            return res.status(500).json({ error: 'Erro ao listar agendamentos' });
+        }
+        res.json(rows);
+    });
 });
 
 app.post('/api/schedules', (req, res) => {
