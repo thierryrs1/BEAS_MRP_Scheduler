@@ -24,6 +24,13 @@
             "async": true,
             "id": "app"
         },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
         "dependencies": {
             "minUI5Version": "1.65.0",
             "libs": {
@@ -49,14 +56,28 @@
             },
             "routes": [
                 {
-                    "name": "RouteMain",
+                    "name": "RouteLogin",
                     "pattern": "",
+                    "target": [
+                        "TargetLogin"
+                    ]
+                },
+                {
+                    "name": "RouteMain",
+                    "pattern": "main",
                     "target": [
                         "TargetMain"
                     ]
                 }
             ],
             "targets": {
+                "TargetLogin": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Login",
+                    "viewName": "Login"
+                },
                 "TargetMain": {
                     "viewType": "XML",
                     "transition": "slide",

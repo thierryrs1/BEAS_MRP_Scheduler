@@ -5,6 +5,9 @@ const cron = require('node-cron');
 const { exec } = require('child_process');
 const hanaClient = require('@sap/hana-client');
 const path = require('path');
+const https = require('https');
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // Ignorar erro de certificado self-signed do SL
 
 const app = express();
 app.use(cors());
@@ -64,6 +67,63 @@ function executeMrp(scenarioId) {
 }
 
 // REST APIs
+app.get('/api/config', (req, res) => {
+    res.json({ dbName: process.env.DB_NAME });
+});
+
+app.post('/api/login', (req, res) => {
+    const { username, password } = req.body;
+    
+    if (!process.env.SL_URL) {
+        return res.status(500).json({ success: false, error: 'URL do Service Layer não configurada' });
+    }
+
+    const data = JSON.stringify({
+        CompanyDB: process.env.DB_NAME,
+        UserName: username,
+        Password: password
+    });
+    
+    const slUrl = new URL(process.env.SL_URL + "/Login");
+    
+    const options = {
+        hostname: slUrl.hostname,
+        port: slUrl.port || 443,
+        path: slUrl.pathname,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(data)
+        },
+        rejectUnauthorized: false
+    };
+    
+    const request = https.request(options, (response) => {
+        let body = '';
+        response.on('data', chunk => body += chunk);
+        response.on('end', () => {
+            if (response.statusCode >= 200 && response.statusCode < 300) {
+                try {
+                    const parsed = JSON.parse(body);
+                    res.json({ success: true, SessionId: parsed.SessionId });
+                } catch(e) {
+                    res.json({ success: true });
+                }
+            } else {
+                res.status(401).json({ success: false, error: 'Usuário ou senha inválidos' });
+            }
+        });
+    });
+    
+    request.on('error', (err) => {
+        console.error('Erro de conexão com Service Layer:', err);
+        res.status(500).json({ success: false, error: 'Erro ao conectar ao Service Layer' });
+    });
+    
+    request.write(data);
+    request.end();
+});
+
 app.get('/api/schedules', (req, res) => {
     res.json(schedules);
 });
@@ -111,10 +171,8 @@ app.put('/api/schedules/:id', (req, res) => {
                 return res.status(500).json({ error: "Erro ao atualizar no banco" });
             }
 
-            // Atualiza na memória
             schedules[index] = { id, scenarioId, scenarioName, cronExpression };
 
-            // Reinicia o cron
             if (activeJobs[id]) {
                 activeJobs[id].stop();
             }

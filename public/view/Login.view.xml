@@ -1,0 +1,25 @@
+<mvc:View
+    controllerName="mrp.app.controller.Login"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout">
+    
+    <Page showHeader="false" class="loginBackground">
+        <FlexBox direction="Column" alignItems="Center" justifyContent="Center" height="100%">
+            <VBox class="loginCard" alignItems="Center">
+                
+                <Image src="logo.png" width="160px" class="sapUiMediumMarginBottom" />
+                
+                <Text text="Portal MRP BEAS" class="sapUiTinyMarginBottom loginTitle" />
+                <Text text="{/dbName}" class="sapUiMediumMarginBottom loginSubtitle" />
+                
+                <Input id="userInput" placeholder="Usuário" width="100%" class="sapUiSmallMarginBottom" />
+                <Input id="passwordInput" type="Password" placeholder="Senha" width="100%" class="sapUiSmallMarginBottom" />
+                
+                <Text text="Entre com usuário e senha" class="sapUiMediumMarginBottom loginHint" />
+                
+                <Button text="Login" type="Reject" width="100%" press="onLoginPress" />
+            </VBox>
+        </FlexBox>
+    </Page>
+</mvc:View>
