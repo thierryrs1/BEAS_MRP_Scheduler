@@ -28,7 +28,10 @@
                         <cells>
                             <Text text="{scenarioId} - {scenarioName}"/>
                             <Text text="{cronExpression}"/>
-                            <Button icon="sap-icon://delete" type="Reject" press="onDeleteSchedule" />
+                            <HBox justifyContent="End" class="sapUiTinyMargin">
+                                <Button icon="sap-icon://media-play" type="Accept" tooltip="Rodar Agora" press="onRunScheduleNow" class="sapUiTinyMarginEnd" />
+                                <Button icon="sap-icon://delete" type="Reject" tooltip="Excluir Agendamento" press="onDeleteSchedule" />
+                            </HBox>
                         </cells>
                     </ColumnListItem>
                 </items>

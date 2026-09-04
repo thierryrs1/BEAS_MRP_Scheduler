@@ -20,7 +20,7 @@ const connOptions = {
     serverNode: process.env.DB_SERVER,
     uid: process.env.DB_USERNAME,
     pwd: process.env.DB_PASSWORD,
-    currentSchema: process.env.DB_NAME // changed from databaseName to currentSchema for SAP B1
+    currentSchema: process.env.DB_NAME
 };
 
 function executeMrp(scenarioId) {
@@ -89,6 +89,17 @@ app.delete('/api/schedules/:id', (req, res) => {
     }
 });
 
+app.post('/api/schedules/:id/run', (req, res) => {
+    const { id } = req.params;
+    const schedule = schedules.find(s => s.id === id);
+    if (schedule) {
+        executeMrp(schedule.scenarioId);
+        res.status(200).json({ message: "Execução iniciada em background" });
+    } else {
+        res.status(404).json({ error: "Agendamento não encontrado" });
+    }
+});
+
 app.get('/api/scenarios', (req, res) => {
     const conn = hanaClient.createConnection();
     conn.connect(connOptions, (err) => {
@@ -97,7 +108,6 @@ app.get('/api/scenarios', (req, res) => {
             return res.status(500).json({ error: 'Erro de conexão com o banco de dados' });
         }
         
-        // Add DB_NAME dynamically as schema to avoid schema errors
         const schema = process.env.DB_NAME;
         const sql = `SELECT "NR", "BEZEICHNUNG" FROM "${schema}"."BEAS_MRP_PLANUNG" ORDER BY 1`;
         

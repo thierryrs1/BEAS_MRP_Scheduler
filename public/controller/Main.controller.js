@@ -46,7 +46,6 @@ sap.ui.define([
             var oView = this.getView();
             var oDialog = oView.byId("addDialog");
             if (oDialog) {
-                // resetar campos
                 oView.byId("timePicker").setValue("");
                 oDialog.open();
             }
@@ -102,7 +101,7 @@ sap.ui.define([
         },
 
         onDeleteSchedule: function (oEvent) {
-            var oItem = oEvent.getSource().getParent();
+            var oItem = oEvent.getSource().getParent().getParent(); // Agora o botão está dentro de um HBox
             var schedule = oItem.getBindingContext().getObject();
 
             fetch('/api/schedules/' + schedule.id, {
@@ -114,6 +113,23 @@ sap.ui.define([
                 this.loadSchedules();
             })
             .catch(err => console.error(err));
+        },
+
+        onRunScheduleNow: function (oEvent) {
+            var oItem = oEvent.getSource().getParent().getParent(); // O botão está dentro de um HBox
+            var schedule = oItem.getBindingContext().getObject();
+
+            fetch('/api/schedules/' + schedule.id + '/run', {
+                method: 'POST'
+            })
+            .then(res => {
+                if(!res.ok) throw new Error("Erro ao iniciar");
+                return res.json();
+            })
+            .then(data => {
+                MessageToast.show("Execução de " + schedule.scenarioName + " iniciada agora no servidor!");
+            })
+            .catch(err => MessageBox.error("Erro ao tentar executar o cenário."));
         }
     });
 });
