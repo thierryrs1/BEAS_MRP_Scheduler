@@ -6,7 +6,7 @@
     
     <Page showHeader="false" class="premiumLoginBackground">
         <FlexBox direction="Column" alignItems="Center" justifyContent="Center" height="100%">
-            <!-- Caixa Principal Modernizada -->
+            <!-- Caixa Principal Modernizada (Tamanho reduzido) -->
             <VBox class="loginCardModern" alignItems="Stretch">
                 
                 <HBox width="100%" justifyContent="Center" class="sapUiSmallMarginBottom">
@@ -14,21 +14,21 @@
                 </HBox>
                 
                 <Text text="Portal MRP BEAS" class="textCenter modernTitle" />
-                <Text text="{/dbName}" class="textCenter modernSubtitle sapUiLargeMarginBottom" />
+                <Text text="{/dbName}" class="textCenter modernSubtitle sapUiMediumMarginBottom" />
                 
-                <!-- Usuário: Label + Input + Ícone via CSS -->
+                <!-- Usuário -->
                 <VBox width="100%" class="sapUiSmallMarginBottom">
                     <Label text="Usuário" class="modernLabel" />
                     <Input id="userInput" placeholder="Digite seu usuário" width="100%" class="modernInput userIcon" />
                 </VBox>
 
-                <!-- Senha: Label + Input + Ícone via CSS -->
-                <VBox width="100%" class="sapUiLargeMarginBottom">
+                <!-- Senha -->
+                <VBox width="100%" class="sapUiMediumMarginBottom">
                     <Label text="Senha" class="modernLabel" />
                     <Input id="passwordInput" type="Password" placeholder="Digite sua senha" width="100%" class="modernInput passIcon" />
                 </VBox>
                 
-                <!-- Botão Ciano Estendido -->
+                <!-- Botão -->
                 <Button text="Entrar" width="100%" press="onLoginPress" class="modernButton sapUiMediumMarginBottom" />
                 
                 <!-- Hint Final -->

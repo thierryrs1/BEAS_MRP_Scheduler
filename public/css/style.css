@@ -1,22 +1,22 @@
-/* Fundo Espacial */
+/* Fundo Espacial Animado */
 @keyframes gradientBG {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
-.premiumLoginBackground {
-    background: linear-gradient(-45deg, #1b2735, #090a0f, #22344a);
-    background-size: 200% 200%;
-    animation: gradientBG 15s ease infinite;
+.premiumLoginBackground, .premiumLoginBackground section {
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364) !important;
+    background-size: 400% 400% !important;
+    animation: gradientBG 15s ease infinite !important;
 }
 
-/* Card Moderno (SaaS Style, Cantos mais arredondados, padding generoso) */
+/* Card Moderno */
 .loginCardModern {
     background-color: #ffffff;
     border-radius: 12px;
-    padding: 3.5rem 3rem;
+    padding: 2.5rem 3rem;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    width: 400px;
+    width: 380px;
     font-family: 'Inter', 'Segoe UI', sans-serif !important;
 }
 
@@ -27,10 +27,10 @@
 }
 
 .modernTitle {
-    font-size: 1.6rem !important;
+    font-size: 1.5rem !important;
     font-weight: 700 !important;
     color: #111827 !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
     font-family: 'Inter', sans-serif !important;
 }
 
@@ -40,49 +40,66 @@
     font-family: 'Inter', sans-serif !important;
 }
 
-/* Labels customizadas acima dos inputs */
+/* Labels */
 .modernLabel {
     font-size: 0.85rem !important;
     font-weight: 600 !important;
     color: #374151 !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
     display: block !important;
     font-family: 'Inter', sans-serif !important;
 }
 
 .modernHint {
-    font-size: 0.8rem !important;
+    font-size: 0.75rem !important;
     color: #9ca3af !important;
     font-family: 'Inter', sans-serif !important;
-    margin-top: 15px !important;
 }
 
-/* Inputs Modernos com espaço para ícone */
-.modernInput .sapMInputBaseInner {
-    border-radius: 6px !important;
+/* Inputs Modernos - Resolvendo a CAIXA DUPLA */
+
+/* 1. O container (borda externa) */
+.modernInput .sapMInputBaseContentWrapper {
     border: 1px solid #d1d5db !important;
-    height: 46px !important;
-    font-size: 0.95rem !important;
-    font-family: 'Inter', sans-serif !important;
-    color: #1f2937 !important;
+    border-radius: 6px !important;
     background-color: #ffffff !important;
-    padding-left: 40px !important; /* Espaço pro ícone esquerdo */
-    background-repeat: no-repeat !important;
-    background-position: 12px center !important;
-    background-size: 18px !important;
+    height: 46px !important;
+    padding: 0 !important;
     transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-.modernInput .sapMInputBaseInner:focus {
+/* Foco no container */
+.modernInput.sapMInputFocused .sapMInputBaseContentWrapper {
     border-color: #00badb !important;
     box-shadow: 0 0 0 3px rgba(0, 186, 219, 0.15) !important;
 }
 
-.modernInput .sapMInputBaseInner::placeholder {
-    color: #9ca3af !important;
+/* 2. O input de texto (interior) */
+.modernInput .sapMInputBaseInner {
+    border: none !important; /* Tira a borda dupla */
+    background-color: transparent !important; /* Fica transparente pro wrapper aparecer */
+    height: 44px !important;
+    line-height: 44px !important; 
+    padding: 0 12px 0 40px !important; /* Espaço do ícone */
+    font-size: 0.95rem !important;
+    font-family: 'Inter', sans-serif !important;
+    color: #1f2937 !important;
+    background-repeat: no-repeat !important;
+    background-position: 12px center !important;
+    background-size: 18px !important;
 }
 
-/* Ícones SVG embutidos via CSS direto nos Inputs! */
+.modernInput .sapMInputBaseInner:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.modernInput .sapMInputBaseInner::placeholder {
+    color: #9ca3af !important;
+    font-style: normal !important;
+}
+
+/* Ícones SVG embutidos via CSS */
 .userIcon .sapMInputBaseInner {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'/%3E%3C/svg%3E") !important;
 }
@@ -91,14 +108,14 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'/%3E%3C/svg%3E") !important;
 }
 
-/* Botão Moderno Ciano (Bright Blue/Teal) */
+/* Botão Ciano (Bright Blue/Teal) */
 .modernButton .sapMBtnInner {
-    background: #00bcd4 !important; /* Cyan brilhante parecido com a foto */
+    background: #00bcd4 !important;
     border: none !important;
     border-radius: 6px !important;
     color: #ffffff !important;
     font-weight: 600 !important;
-    height: 48px !important;
+    height: 46px !important;
     font-size: 1.05rem !important;
     font-family: 'Inter', sans-serif !important;
     text-shadow: none !important;
