@@ -130,7 +130,7 @@ app.get('/api/schedules', (req, res) => {
             T0."ID" as "id",
             T0."SCENARIO_ID" as "scenarioId",
             T0."SCENARIO_NAME" as "scenarioName",
-            T0."SCENARIO_ID" || ' - ' || T0."SCENARIO_NAME" as "Cenario",
+            T0."SCENARIO_ID" || ' - ' || T0."SCENARIO_NAME" as "Cenário",
             T1."TimeStartMRP",
             T1."TimeEndMRP",
             T0."CRON_EXPRESSION" as "cronExpression"
