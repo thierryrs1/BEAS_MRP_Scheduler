@@ -108,19 +108,29 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'/%3E%3C/svg%3E") !important;
 }
 
-/* Botão Ciano (Bright Blue/Teal) */
+/* Botão Ciano (Bright Blue/Teal) - Resolvendo borda dupla e alinhamento */
+.modernButton {
+    height: 46px !important;
+    border: none !important;
+    background: transparent !important;
+}
+
 .modernButton .sapMBtnInner {
     background: #00bcd4 !important;
     border: none !important;
     border-radius: 6px !important;
     color: #ffffff !important;
     font-weight: 600 !important;
-    height: 46px !important;
+    height: 100% !important;
+    line-height: 46px !important;
     font-size: 1.05rem !important;
     font-family: 'Inter', sans-serif !important;
     text-shadow: none !important;
     box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3) !important;
     transition: background-color 0.2s ease, transform 0.1s ease !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
 .modernButton .sapMBtnInner:hover {
