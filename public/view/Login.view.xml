@@ -8,7 +8,7 @@
         <FlexBox direction="Column" alignItems="Center" justifyContent="Center" height="100%">
             <VBox class="loginCard" alignItems="Center">
                 
-                <Image src="logo.png" width="160px" class="sapUiMediumMarginBottom" />
+                <Image src="assets/img/logo.png" width="160px" class="sapUiMediumMarginBottom" />
                 
                 <Text text="Portal MRP BEAS" class="sapUiTinyMarginBottom loginTitle" />
                 <Text text="{/dbName}" class="sapUiMediumMarginBottom loginSubtitle" />
