@@ -4,21 +4,27 @@
     xmlns="sap.m"
     xmlns:l="sap.ui.layout">
     
-    <Page showHeader="false" class="loginBackground">
+    <Page showHeader="false" class="premiumLoginBackground">
         <FlexBox direction="Column" alignItems="Center" justifyContent="Center" height="100%">
-            <VBox class="loginCard" alignItems="Center">
+            <!-- Note o alignItems="Stretch" para que os inputs e botões ocupem 100% do card -->
+            <VBox class="premiumLoginCard" alignItems="Stretch">
                 
-                <Image src="assets/img/logo.png" width="160px" class="sapUiMediumMarginBottom" />
+                <HBox justifyContent="Center" class="sapUiMediumMarginBottom">
+                    <Image src="assets/img/logo.png" width="180px" />
+                </HBox>
                 
-                <Text text="Portal MRP BEAS" class="sapUiTinyMarginBottom loginTitle" />
-                <Text text="{/dbName}" class="sapUiMediumMarginBottom loginSubtitle" />
+                <Text text="Portal MRP BEAS" textAlign="Center" class="sapUiSmallMarginBottom premiumTitle" />
                 
-                <Input id="userInput" placeholder="Usuário" width="100%" class="sapUiSmallMarginBottom" />
-                <Input id="passwordInput" type="Password" placeholder="Senha" width="100%" class="sapUiSmallMarginBottom" />
+                <HBox justifyContent="Center" class="sapUiLargeMarginBottom">
+                    <Text text="{/dbName}" class="premiumSubtitle" />
+                </HBox>
                 
-                <Text text="Entre com usuário e senha" class="sapUiMediumMarginBottom loginHint" />
+                <Input id="userInput" placeholder="Usuário" width="100%" class="sapUiSmallMarginBottom premiumInput" />
+                <Input id="passwordInput" type="Password" placeholder="Senha" width="100%" class="sapUiMediumMarginBottom premiumInput" />
                 
-                <Button text="Login" type="Reject" width="100%" press="onLoginPress" />
+                <Text text="Insira suas credenciais de acesso do SAP" textAlign="Center" class="sapUiMediumMarginBottom premiumHint" />
+                
+                <Button text="ENTRAR" type="Reject" width="100%" press="onLoginPress" class="premiumButton" />
             </VBox>
         </FlexBox>
     </Page>

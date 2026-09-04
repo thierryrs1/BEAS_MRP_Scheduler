@@ -1,28 +1,98 @@
-.loginBackground {
-    background-color: #f5f5f5;
+/* CSS Premium e Moderno (Estilo SAP Fiori Clean) */
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-.loginCard {
-    background-color: #ffffff;
-    padding: 2.5rem 3rem;
-    border-radius: 4px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
-    width: 320px;
-    border: 1px solid #e5e5e5;
+.premiumLoginBackground {
+    background: linear-gradient(-45deg, #2b3945, #1e293b, #0f172a);
+    background-size: 200% 200%;
+    animation: gradientBG 15s ease infinite;
 }
 
-.loginTitle {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #2b395e;
+.premiumLoginCard {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 400px;
 }
 
-.loginSubtitle {
-    font-size: 0.9rem;
-    color: #666;
+.premiumTitle {
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    letter-spacing: -0.5px;
+    font-family: 'Outfit', sans-serif !important;
+    text-align: center;
 }
 
-.loginHint {
-    font-size: 0.8rem;
-    color: #888;
+.premiumSubtitle {
+    font-size: 0.75rem !important;
+    color: #2563eb !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: #eff6ff;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif !important;
+    border: 1px solid #bfdbfe;
+}
+
+.premiumHint {
+    font-size: 0.85rem !important;
+    color: #64748b !important;
+    font-family: 'Inter', sans-serif !important;
+    text-align: center;
+    display: block;
+}
+
+/* Inputs Fiori Modernos */
+.premiumInput .sapMInputBaseInner {
+    border-radius: 8px !important;
+    border: 1px solid #cbd5e1 !important;
+    padding: 12px 16px !important;
+    height: 48px !important;
+    font-size: 0.95rem !important;
+    font-family: 'Inter', sans-serif !important;
+    background-color: #f8fafc !important;
+    color: #334155 !important;
+    transition: all 0.2s ease !important;
+}
+
+.premiumInput .sapMInputBaseInner:focus {
+    border-color: #3b82f6 !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+}
+
+/* Botão Moderno */
+.premiumButton {
+    margin-top: 20px !important;
+}
+
+.premiumButton .sapMBtnInner {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    color: white !important;
+    font-weight: 600 !important;
+    height: 48px !important;
+    font-size: 1rem !important;
+    font-family: 'Inter', sans-serif !important;
+    text-shadow: none !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+}
+
+.premiumButton .sapMBtnInner:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4) !important;
+}
+
+.premiumButton .sapMBtnInner.sapMBtnActive {
+    transform: scale(0.98) !important;
 }
