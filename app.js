@@ -96,7 +96,9 @@ app.post('/api/login', (req, res) => {
             'Content-Type': 'application/json',
             'Content-Length': Buffer.byteLength(data)
         },
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
+        secureOptions: require('crypto').constants.SSL_OP_LEGACY_SERVER_CONNECT,
+        ciphers: 'DEFAULT@SECLEVEL=0'
     };
 
     const request = https.request(options, (response) => {
