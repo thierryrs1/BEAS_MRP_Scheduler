@@ -1,4 +1,4 @@
-<mvc:View
+﻿<mvc:View
     controllerName="mrp.app.controller.Main"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
@@ -14,25 +14,25 @@
             <Table id="schedulesTable" items="{/schedules}" noDataText="Nenhum agendamento ativo." headerText="Agendamentos Ativos">
                 <columns>
                     <Column>
-                        <Text text="Cenário"/>
+                        <Text text="CenÃ¡rio"/>
                     </Column>
                     <Column>
-                        <Text text="Início do Cálculo"/>
+                        <Text text="InÃ­cio do CÃ¡lculo"/>
                     </Column>
                     <Column>
-                        <Text text="Fim do Cálculo"/>
+                        <Text text="Fim do CÃ¡lculo"/>
                     </Column>
                     <Column>
-                        <Text text="Expressão Cron"/>
+                        <Text text="ExpressÃ£o Cron"/>
                     </Column>
                     <Column hAlign="End">
-                        <Text text="Ações"/>
+                        <Text text="AÃ§Ãµes"/>
                     </Column>
                 </columns>
                 <items>
                     <ColumnListItem>
                         <cells>
-                            <Text text="{Cenário}"/>
+                            <Text text="{scenarioId} - {scenarioName}"/>
                             <Text text="{TimeStartMRP}"/>
                             <Text text="{TimeEndMRP}"/>
                             <Text text="{cronExpression}"/>
@@ -51,13 +51,13 @@
             <Dialog id="addDialog" title="Novo Agendamento">
                 <content>
                     <VBox class="sapUiSmallMargin">
-                        <Label text="Selecione o Cenário:" required="true" />
+                        <Label text="Selecione o CenÃ¡rio:" required="true" />
                         <Select id="scenarioSelect" items="{/scenarios}" width="100%">
                             <core:Item key="{NR}" text="{BEZEICHNUNG}" />
                         </Select>
                         
-                        <Label text="Horário:" required="true" class="sapUiTopMarginSmall" />
-                        <TimePicker id="timePicker" valueFormat="HH:mm" displayFormat="HH:mm" placeholder="Selecione o horário" width="100%" />
+                        <Label text="HorÃ¡rio:" required="true" class="sapUiTopMarginSmall" />
+                        <TimePicker id="timePicker" valueFormat="HH:mm" displayFormat="HH:mm" placeholder="Selecione o horÃ¡rio" width="100%" />
 
                         <Label text="Dias da semana:" required="true" class="sapUiTopMarginSmall" />
                         <HBox wrap="Wrap" class="sapUiTinyMarginTop">
@@ -66,7 +66,7 @@
                             <CheckBox id="chkWed" text="Qua" selected="true" class="sapUiTinyMarginEnd" />
                             <CheckBox id="chkThu" text="Qui" selected="true" class="sapUiTinyMarginEnd" />
                             <CheckBox id="chkFri" text="Sex" selected="true" class="sapUiTinyMarginEnd" />
-                            <CheckBox id="chkSat" text="Sáb" class="sapUiTinyMarginEnd" />
+                            <CheckBox id="chkSat" text="SÃ¡b" class="sapUiTinyMarginEnd" />
                             <CheckBox id="chkSun" text="Dom" />
                         </HBox>
                     </VBox>
