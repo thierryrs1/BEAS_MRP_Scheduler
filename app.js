@@ -1,3 +1,4 @@
+﻿require('tls').DEFAULT_MIN_VERSION = 'TLSv1';
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -26,7 +27,7 @@ const connOptions = {
 
 const schema = process.env.DB_NAME;
 
-// Função auxiliar para executar SQL
+// FunÃ§Ã£o auxiliar para executar SQL
 function executeSql(sql, params, callback) {
     const conn = hanaClient.createConnection();
     conn.connect(connOptions, (err) => {
@@ -55,7 +56,7 @@ function executeMrp(scenarioId) {
     const cmd = `cd /d "${beasPath}" && start /wait "" beas.exe server=${server} db=${db} user=${user} pw=${pw} /inservermode script="<cr_lf>${scriptContent}<cr_lf>app=close<cr_lf>"`;
 
     const now = new Date().toLocaleString('pt-BR');
-    console.log(`[${now}] Executando MRP: Cenário ${scenarioId}`);
+    console.log(`[${now}] Executando MRP: CenÃ¡rio ${scenarioId}`);
 
     exec(cmd, (error, stdout, stderr) => {
         if (error) {
@@ -75,7 +76,7 @@ app.post('/api/login', (req, res) => {
     const { username, password } = req.body;
 
     if (!process.env.SL_URL) {
-        return res.status(500).json({ success: false, error: 'URL do Service Layer não configurada' });
+        return res.status(500).json({ success: false, error: 'URL do Service Layer nÃ£o configurada' });
     }
 
     const data = JSON.stringify({
@@ -110,13 +111,13 @@ app.post('/api/login', (req, res) => {
                     res.json({ success: true });
                 }
             } else {
-                res.status(401).json({ success: false, error: 'Usuário ou senha inválidos' });
+                res.status(401).json({ success: false, error: 'UsuÃ¡rio ou senha invÃ¡lidos' });
             }
         });
     });
 
     request.on('error', (err) => {
-        console.error('Erro de conexão com Service Layer:', err);
+        console.error('Erro de conexÃ£o com Service Layer:', err);
         res.status(500).json({ success: false, error: 'Erro ao conectar ao Service Layer' });
     });
 
@@ -130,7 +131,7 @@ app.get('/api/schedules', (req, res) => {
             T0."ID" as "id",
             T0."SCENARIO_ID" as "scenarioId",
             T0."SCENARIO_NAME" as "scenarioName",
-            T0."SCENARIO_ID" || ' - ' || T0."SCENARIO_NAME" as "Cenário",
+            T0."SCENARIO_ID" || ' - ' || T0."SCENARIO_NAME" as "CenÃ¡rio",
             TO_NVARCHAR(T1."TimeStartMRP", 'DD/MM/YYYY HH24:MI:SS') as "TimeStartMRP",
             TO_NVARCHAR(T1."TimeEndMRP", 'DD/MM/YYYY HH24:MI:SS') as "TimeEndMRP",
             T0."CRON_EXPRESSION" as "cronExpression"
@@ -154,7 +155,7 @@ app.post('/api/schedules', (req, res) => {
     const { scenarioId, cronExpression, scenarioName } = req.body;
 
     if (!cron.validate(cronExpression)) {
-        return res.status(400).json({ error: "Expressão Cron inválida" });
+        return res.status(400).json({ error: "ExpressÃ£o Cron invÃ¡lida" });
     }
 
     const id = Date.now().toString();
@@ -181,7 +182,7 @@ app.put('/api/schedules/:id', (req, res) => {
     const { scenarioId, cronExpression, scenarioName } = req.body;
 
     if (!cron.validate(cronExpression)) {
-        return res.status(400).json({ error: "Expressão Cron inválida" });
+        return res.status(400).json({ error: "ExpressÃ£o Cron invÃ¡lida" });
     }
 
     const index = schedules.findIndex(s => s.id === id);
@@ -205,7 +206,7 @@ app.put('/api/schedules/:id', (req, res) => {
             res.status(200).json(schedules[index]);
         });
     } else {
-        res.status(404).json({ error: "Agendamento não encontrado" });
+        res.status(404).json({ error: "Agendamento nÃ£o encontrado" });
     }
 });
 
@@ -229,7 +230,7 @@ app.delete('/api/schedules/:id', (req, res) => {
             res.status(200).json({ message: "Agendamento removido" });
         });
     } else {
-        res.status(404).json({ error: "Agendamento não encontrado" });
+        res.status(404).json({ error: "Agendamento nÃ£o encontrado" });
     }
 });
 
@@ -238,9 +239,9 @@ app.post('/api/schedules/:id/run', (req, res) => {
     const schedule = schedules.find(s => s.id === id);
     if (schedule) {
         executeMrp(schedule.scenarioId);
-        res.status(200).json({ message: "Execução iniciada em background" });
+        res.status(200).json({ message: "ExecuÃ§Ã£o iniciada em background" });
     } else {
-        res.status(404).json({ error: "Agendamento não encontrado" });
+        res.status(404).json({ error: "Agendamento nÃ£o encontrado" });
     }
 });
 
@@ -248,14 +249,14 @@ app.get('/api/scenarios', (req, res) => {
     const sql = `SELECT "NR", "BEZEICHNUNG" FROM "${schema}"."BEAS_MRP_PLANUNG" ORDER BY 1`;
     executeSql(sql, [], (err, rows) => {
         if (err) {
-            console.error('Erro ao consultar cenários:', err);
-            return res.status(500).json({ error: 'Erro ao consultar cenários MRP' });
+            console.error('Erro ao consultar cenÃ¡rios:', err);
+            return res.status(500).json({ error: 'Erro ao consultar cenÃ¡rios MRP' });
         }
         res.json(rows);
     });
 });
 
-// Inicialização do Banco de Dados e Carga dos Agendamentos
+// InicializaÃ§Ã£o do Banco de Dados e Carga dos Agendamentos
 function initDBAndStart() {
     const checkTableSql = `SELECT COUNT(*) AS "count" FROM "TABLES" WHERE "SCHEMA_NAME" = '${schema}' AND "TABLE_NAME" = 'SPS_MRP_SCHEDULES'`;
     executeSql(checkTableSql, [], (err, result) => {
@@ -283,7 +284,7 @@ function initDBAndStart() {
                 startServer();
             });
         } else {
-            console.log("Tabela SPS_MRP_SCHEDULES já existe. Carregando agendamentos...");
+            console.log("Tabela SPS_MRP_SCHEDULES jÃ¡ existe. Carregando agendamentos...");
             loadSchedulesFromDB();
         }
     });
